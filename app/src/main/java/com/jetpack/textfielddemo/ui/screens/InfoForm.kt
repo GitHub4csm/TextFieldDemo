@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -23,6 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType.Companion.Number
 import androidx.compose.ui.text.input.KeyboardType.Companion.Password
 import androidx.compose.ui.text.input.KeyboardType.Companion.Text
 import androidx.compose.ui.unit.dp
+import com.jetpack.textfielddemo.ui.widgets.InputErrorField
 import com.jetpack.textfielddemo.ui.widgets.InputField
 import com.jetpack.textfielddemo.ui.widgets.InputPassWordField
 
@@ -39,18 +42,23 @@ Column(modifier = modifier.padding(5.dp)) {
     val keyBoarManager = LocalSoftwareKeyboardController.current
     InputField(text = firstName,
                onValueChange = {firstName = it},
-               modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+               modifier = Modifier
+                   .fillMaxWidth()
+                   .wrapContentHeight(),
                label = {Text("First Name")},
                placeHolderText = {Text("Enter First Name")},
                imeAction = ImeAction.Next,
                keyboardType = Text,
                keyboardActions = KeyboardActions(onNext = {
                    focusManager.moveFocus(FocusDirection.Down)
-               })
+               }),
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = Color.Green, unfocusedBorderColor = Color.Red)
                 )
     InputField(text = lastName,
         onValueChange = {lastName = it},
-        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         label = {Text("Last Name")},
         placeHolderText = {Text("Enter Last Name")},
         imeAction = ImeAction.Next,
@@ -60,21 +68,27 @@ Column(modifier = modifier.padding(5.dp)) {
         })
     )
 
-    InputField(text = mobile,
+    InputErrorField(text = mobile,
         onValueChange = {mobile = it},
-        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         label = {Text("Mobile")},
         placeHolderText = {Text("Enter Mobile")},
         imeAction = ImeAction.Next,
         keyboardType = Number,
         keyboardActions = KeyboardActions(onNext = {
             focusManager.moveFocus(FocusDirection.Down)
-        })
+        }),
+        isError = mobile.length < 5 && mobile.isNotBlank(),
+        errorMessage = "Mobile Number is invalid. To be greater than 5"
     )
 
     InputField(text = email,
         onValueChange = {email = it},
-        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         label = {Text("Email")},
         placeHolderText = {Text("Enter Email")},
         imeAction = ImeAction.Next,
@@ -85,7 +99,9 @@ Column(modifier = modifier.padding(5.dp)) {
     )
     InputPassWordField(text = password,
         onValueChange = {password = it},
-        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         label = {Text("Password")},
         placeHolderText = {Text("Enter Password")},
         imeAction = ImeAction.Next,
