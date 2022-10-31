@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.jetpack.textfielddemo.ui.screens.DisplayInfoForm
 import com.jetpack.textfielddemo.ui.theme.TextFieldDemoTheme
-import com.jetpack.textfielddemo.ui.widgets.InputField
+import com.jetpack.textfielddemo.ui.widgets.textField.BasicTextField
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DisplayOutLinedTextField(){
     var input by rememberSaveable { mutableStateOf("Hello") }
-    InputField(input,
+    BasicTextField(input,
                         placeHolderText = {Text("PlaceHolder")},
                          label = {Text("Label")},
                          onValueChange = {input = it},

@@ -25,9 +25,10 @@ import androidx.compose.ui.text.input.KeyboardType.Companion.Number
 import androidx.compose.ui.text.input.KeyboardType.Companion.Password
 import androidx.compose.ui.text.input.KeyboardType.Companion.Text
 import androidx.compose.ui.unit.dp
-import com.jetpack.textfielddemo.ui.widgets.InputErrorField
-import com.jetpack.textfielddemo.ui.widgets.InputField
-import com.jetpack.textfielddemo.ui.widgets.InputPassWordField
+import com.jetpack.textfielddemo.ui.widgets.textField.BasicTextField
+import com.jetpack.textfielddemo.ui.widgets.textField.DatePickerTextField
+import com.jetpack.textfielddemo.ui.widgets.textField.ErrorTextField
+import com.jetpack.textfielddemo.ui.widgets.textField.PassWordTextField
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -37,10 +38,12 @@ fun DisplayInfoForm(modifier: Modifier = Modifier){
     var email  by rememberSaveable { mutableStateOf("") }
     var mobile    by rememberSaveable {mutableStateOf("") }
     var password    by rememberSaveable {mutableStateOf("") }
+    var selectedDate by rememberSaveable {mutableStateOf("") }
+
 Column(modifier = modifier.padding(5.dp)) {
     val focusManager = LocalFocusManager.current
     val keyBoarManager = LocalSoftwareKeyboardController.current
-    InputField(text = firstName,
+    BasicTextField(text = firstName,
                onValueChange = {firstName = it},
                modifier = Modifier
                    .fillMaxWidth()
@@ -54,7 +57,7 @@ Column(modifier = modifier.padding(5.dp)) {
                }),
                 colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = Color.Green, unfocusedBorderColor = Color.Red)
                 )
-    InputField(text = lastName,
+    BasicTextField(text = lastName,
         onValueChange = {lastName = it},
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +71,7 @@ Column(modifier = modifier.padding(5.dp)) {
         })
     )
 
-    InputErrorField(text = mobile,
+    ErrorTextField(text = mobile,
         onValueChange = {mobile = it},
         modifier = Modifier
             .fillMaxWidth()
@@ -84,7 +87,7 @@ Column(modifier = modifier.padding(5.dp)) {
         errorMessage = "Mobile Number is invalid. To be greater than 5"
     )
 
-    InputField(text = email,
+    BasicTextField(text = email,
         onValueChange = {email = it},
         modifier = Modifier
             .fillMaxWidth()
@@ -97,7 +100,7 @@ Column(modifier = modifier.padding(5.dp)) {
             focusManager.moveFocus(FocusDirection.Down)
         })
     )
-    InputPassWordField(text = password,
+    PassWordTextField(text = password,
         onValueChange = {password = it},
         modifier = Modifier
             .fillMaxWidth()
@@ -110,6 +113,18 @@ Column(modifier = modifier.padding(5.dp)) {
             focusManager.moveFocus(FocusDirection.Down)
         })
     )
+
+    DatePickerTextField(text = selectedDate ,
+                        onValueChange ={selectedDate = it},
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        label = {Text("Select  Date")},
+        placeHolderText = {Text("Date Selector")},
+        imeAction = ImeAction.Next,
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }))
     
 }
 }
